@@ -1,7 +1,12 @@
 import re
 from itertools import groupby
+import os
 
-def viterbi_segment(text):
+cleanup = re.compile(r'[^a-z0-9]')
+
+# http://stackoverflow.com/a/481773/554406
+def segment(text):
+  text = re.sub(cleanup, '', text)
   probs, lasts = [1.0], [0]
   for i in range(1, len(text) + 1):
     prob_k, k = max(
@@ -20,19 +25,11 @@ def viterbi_segment(text):
 
 def word_prob(word): return dictionary.get(word, 0) / total
 
-# def words(text): return re.findall('[a-z]+', text.lower()) 
-#
-# dictionary = dict(
-#   (w, len(list(ws)))
-#   for w, ws in groupby(sorted(words(open('source.txt').read())))
-# )
-# max_word_length = max(map(len, dictionary))
-# total = float(sum(dictionary.values()))
-
 def entry(line): 
   w, c = line.split("\t", 2)
   return (w, int(c))
 
-dictionary = dict(entry(line) for line in open('dict.txt'))
+dict_path = os.path.join(os.path.dirname(__file__), 'dict.txt')
+dictionary = dict(entry(line) for line in open(dict_path))
 max_word_length = max(map(len, dictionary))
 total = float(sum(dictionary.values()))
