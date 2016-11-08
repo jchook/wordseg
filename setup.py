@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 
 with open('README.rst') as f:
     readme = f.read()
 
-with open('LICENSE') as f:
-    license = f.read()
+# with open('LICENSE') as f:
+#     license = f.read()
+
+license = "MIT"
 
 setup(
     name='wordseg',

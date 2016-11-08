@@ -3,7 +3,7 @@
 import sys
 import argparse
 import codecs
-from . import split
+from wordseg import segment
 
 # Parse arguments
 parser = argparse.ArgumentParser(description='Convert tweet JSON to a simple text file')
@@ -13,5 +13,5 @@ parser.add_argument('outfile', nargs='?', type=lambda s: codecs.open(s, 'w', 'ut
 args = parser.parse_args()
 
 for word in args.infile.read().split():
-	words, confidence = split(word)
+	words, confidence = segment(word)
 	print ' '.join(words) + "\t" + str(confidence)
